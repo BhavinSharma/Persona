@@ -74,7 +74,7 @@ function CameraRecorder() {
 
   return (
     <div className="camera-recorder">
-      <h2>Camera Recorder</h2>
+      <h2> Student Camera Feed</h2>
 
       <video
         ref={videoRef}
