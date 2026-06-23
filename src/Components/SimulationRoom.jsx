@@ -28,7 +28,7 @@ function SimulationRoom({ client }) {
         <CameraRecorder />
       </div>
 
-      <InterviewChat />
+      <InterviewChat scenario={client.scenario} />
     </div>
   );
 }

@@ -1,13 +1,47 @@
 import { useState } from "react";
 
-function InterviewChat() {
-  const questions = [
+function InterviewChat({ scenario }) {
+  const lowerScenario = scenario?.toLowerCase() || "";
+
+  let questions = [
     "Tell me about yourself.",
     "What project are you most proud of?",
     "What challenges did you face?",
     "How did you solve them?",
     "Why do you want this role?"
   ];
+
+  if (lowerScenario.includes("cyber")) {
+    questions = [
+      "What is phishing and how would you explain it to a non-technical user?",
+      "How would you secure a login system?",
+      "What steps would you take after detecting suspicious network activity?",
+      "What is multi-factor authentication and why is it important?",
+      "Tell me about a cybersecurity concept or tool you have worked with."
+    ];
+  } else if (
+    lowerScenario.includes("software") ||
+    lowerScenario.includes("developer")
+  ) {
+    questions = [
+      "Can you walk me through a software project you built?",
+      "What technical challenges did you face during development?",
+      "How do you debug an application when something breaks?",
+      "How do you work with a team using GitHub?",
+      "Why do you want this software engineering role?"
+    ];
+  } else if (
+    lowerScenario.includes("patient") ||
+    lowerScenario.includes("health")
+  ) {
+    questions = [
+      "Can you describe the symptoms you are experiencing?",
+      "How long have you had these symptoms?",
+      "Are you currently taking any medication?",
+      "Have the symptoms become better or worse over time?",
+      "Is there anything else about your health history I should know?"
+    ];
+  }
 
   const [messages, setMessages] = useState([
     {
