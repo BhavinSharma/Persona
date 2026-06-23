@@ -2,17 +2,21 @@ import { useState } from "react";
 
 function ScenarioForm({ setClient }) {
   const [scenario, setScenario] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const generateClient = () => {
+  const generateClient = async () => {
+    if (!scenario.trim()) return;
+
     const lowerScenario = scenario.toLowerCase();
 
+    // Keep the same persona-picking logic as before — this part is unchanged.
     let client = {
       name: "Priya Sharma",
       age: 34,
       mood: "Professional",
       role: "Hiring Manager",
       scenario,
-      openingLine: "Thanks for joining today. Could you start by telling me about yourself?"
     };
 
     if (lowerScenario.includes("cyber")) {
@@ -22,7 +26,6 @@ function ScenarioForm({ setClient }) {
         mood: "Direct",
         role: "Cybersecurity Lead",
         scenario,
-        openingLine: "Let's start with the basics. How would you explain phishing to a non-technical user?"
       };
     } else if (lowerScenario.includes("software") || lowerScenario.includes("developer")) {
       client = {
@@ -31,11 +34,37 @@ function ScenarioForm({ setClient }) {
         mood: "Curious",
         role: "Senior Software Engineer",
         scenario,
-        openingLine: "Can you walk me through a project you've built and the technical decisions you made?"
       };
     }
 
-    setClient(client);
+    // NEW: instead of a hardcoded openingLine, ask the backend (Claude)
+    // to generate one based on the scenario and persona.
+    setIsLoading(true);
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("http://localhost:5000/api/client-reply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ client, history: [] }),
+      });
+      const data = await res.json();
+
+      if (data.error) {
+        setErrorMsg(`Backend error: ${data.error}`);
+        setIsLoading(false);
+        return;
+      }
+
+      client.openingLine = data.reply;
+      setClient(client);
+    } catch (err) {
+      setErrorMsg(
+        "Could not reach the backend. Make sure it's running (cd server && node index.js)."
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -49,7 +78,11 @@ function ScenarioForm({ setClient }) {
         onChange={(e) => setScenario(e.target.value)}
       />
 
-      <button onClick={generateClient}>Start Simulation</button>
+      <button onClick={generateClient} disabled={isLoading}>
+        {isLoading ? "Setting up..." : "Start Simulation"}
+      </button>
+
+      {errorMsg && <p style={{ color: "#b91c1c", marginTop: "10px" }}>{errorMsg}</p>}
     </div>
   );
 }
