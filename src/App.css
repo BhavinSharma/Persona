@@ -1,75 +1,155 @@
 .app {
   min-height: 100vh;
-  background: #f4f7fb;
-  font-family: Arial, sans-serif;
-  padding: 40px;
+  padding: 48px 24px;
+}
+
+.app-header {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 40px;
+}
+
+.eyebrow {
+  color: #c4b5fd;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.app-header h1 {
+  color: #ffffff;
+  font-size: clamp(48px, 8vw, 88px);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  margin: 0;
+}
+
+.subtitle {
+  color: #cbd5e1;
+  font-size: clamp(18px, 2.5vw, 28px);
+  margin-top: 22px;
 }
 
 .setup-card,
-.client-card {
-  max-width: 700px;
-  margin: auto;
-  background: white;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+.client-card,
+.chat-box,
+.camera-recorder {
+  max-width: 1100px;
+  margin: 0 auto 28px;
+  background: rgba(15, 23, 42, 0.84);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  padding: 34px;
+  border-radius: 28px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(18px);
 }
 
-textarea {
-  width: 100%;
-  height: 140px;
-  margin: 20px 0;
-  padding: 15px;
-  font-size: 16px;
-}
-
-button {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 10px;
-  background: black;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-}
-h1, h2, p {
-  color: #111827;
+.setup-card h1,
+.setup-card h2,
+.client-card h1,
+.client-card h2,
+.chat-box h1,
+.chat-box h2,
+.camera-recorder h1,
+.camera-recorder h2 {
+  color: #f8fafc;
+  margin-top: 0;
 }
 
 .setup-card p,
-.client-card p {
-  color: #374151;
+.client-card p,
+.chat-box p,
+.camera-recorder p {
+  color: #cbd5e1;
+}
+
+textarea,
+input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(2, 6, 23, 0.82);
+  color: #f8fafc;
+  font-size: 16px;
+  outline: none;
 }
 
 textarea {
-  color: #111827;
-  background: #f9fafb;
+  min-height: 140px;
+  margin: 20px 0;
+  resize: vertical;
 }
-.chat-box {
-  max-width: 700px;
-  margin: 30px auto;
-  background: white;
-  padding: 25px;
-  border-radius: 16px;
+
+textarea:focus,
+input:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+}
+
+button {
+  padding: 13px 22px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  color: white;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  opacity: 0.92;
+}
+
+.simulation-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto 30px;
+}
+
+.avatar {
+  font-size: 90px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.session-timer {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #f8fafc;
 }
 
 .messages {
-  min-height: 200px;
+  min-height: 220px;
   margin-bottom: 20px;
 }
 
+.interviewer,
+.student {
+  padding: 14px 16px;
+  margin: 12px 0;
+  border-radius: 16px;
+  color: #f8fafc;
+}
+
 .interviewer {
-  background: #e5e7eb;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 10px;
+  background: rgba(99, 102, 241, 0.18);
+  border: 1px solid rgba(129, 140, 248, 0.25);
 }
 
 .student {
-  background: #dbeafe;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 10px;
+  background: rgba(14, 165, 233, 0.18);
+  border: 1px solid rgba(56, 189, 248, 0.25);
   text-align: right;
 }
 
@@ -80,38 +160,33 @@ textarea {
 
 .chat-input input {
   flex: 1;
-  padding: 12px;
-}
-.simulation-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  max-width: 1100px;
-  margin: 0 auto 30px auto;
 }
 
-.camera-recorder {
-  background: white;
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-}
-
-.avatar {
-  font-size: 80px;
-  text-align: center;
-  margin-top: 20px;
+video {
+  width: 100%;
+  border-radius: 18px;
+  background: #020617;
+  border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 @media (max-width: 800px) {
+  .app {
+    padding: 32px 14px;
+  }
+
   .simulation-layout {
     grid-template-columns: 1fr;
   }
-}
-.session-timer {
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #111827;
+
+  .setup-card,
+  .client-card,
+  .chat-box,
+  .camera-recorder {
+    padding: 22px;
+    border-radius: 22px;
+  }
+
+  .chat-input {
+    flex-direction: column;
+  }
 }
