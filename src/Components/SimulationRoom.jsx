@@ -1,19 +1,23 @@
+import InterviewChat from "./InterviewChat";
+import Recorder from "./Recorder";
+
 function SimulationRoom({ client }) {
   return (
-    <div>
+    <div className="simulation">
       <h1>Simulation Room</h1>
 
-      <h2>{client.name}</h2>
+      <div className="client-card">
+        <h2>{client.name}</h2>
+        <p>Age: {client.age}</p>
+        <p>Mood: {client.mood}</p>
+        <p>Role: {client.role}</p>
+        <p><strong>Scenario:</strong> {client.scenario}</p>
+        <p><strong>Opening Line:</strong> {client.openingLine}</p>
+      </div>
 
-      <p>Age: {client.age}</p>
+      <InterviewChat />
 
-      <p>Mood: {client.mood}</p>
-
-      <p>
-        <strong>Opening Statement:</strong>
-      </p>
-
-      <p>{client.openingLine}</p>
+      <Recorder />
     </div>
   );
 }
